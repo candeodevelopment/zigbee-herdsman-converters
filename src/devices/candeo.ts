@@ -642,44 +642,34 @@ export const definitions: DefinitionWithExtend[] = [
         },
     },
     {
-        fingerprint: [{ modelID: 'C-ZB-SM30-2G', manufacturerName: 'Candeo' }],
-        model: 'C-ZB-SM30-2G',
-        vendor: 'Candeo',
-        description: 'Smart 2 gang switch module',
+        fingerprint: [{modelID: "C-ZB-SM30-2G", manufacturerName: "Candeo"}],
+        model: "C-ZB-SM30-2G",
+        vendor: "Candeo",
+        description: "Smart 2 gang switch module",
         extend: [
             m.deviceEndpoints({
-                endpoints: { l1: 1, l2: 2, e3: 3 },
+                endpoints: {l1: 1, l2: 2, e3: 3},
                 multiEndpointSkip: ["power", "current", "voltage", "energy"],
             }),
             m.onOff({
                 powerOnBehavior: false,
-                endpointNames: ['l1', 'l2'],
+                endpointNames: ["l1", "l2"],
             }),
-            m.electricityMeter( {
-                power: { min: 5, max: 300, change: 10 },
-                voltage: { min: 5, max: 600, change: 500 },
-                current: { min: 5, max: 900, change: 10 },
-                energy: { min: 5, max: 1800, change: 50 },
-            } ),
+            m.electricityMeter({
+                power: {min: 5, max: 300, change: 10},
+                voltage: {min: 5, max: 600, change: 500},
+                current: {min: 5, max: 900, change: 10},
+                energy: {min: 5, max: 1800, change: 50},
+            }),
         ],
         exposes: [
-            e.power_on_behavior(["off", "on", "previous"]).withEndpoint('l1'),
-            e.power_on_behavior(["off", "on", "previous"]).withEndpoint('l2')
+            e.power_on_behavior(["off", "on", "previous"]).withEndpoint("l1"),
+            e.power_on_behavior(["off", "on", "previous"]).withEndpoint("l2"),
         ],
-        fromZigbee: [
-            fz.power_on_behavior
-        ],
-        toZigbee: [
-            tz.power_on_behavior
-        ],
+        fromZigbee: [fz.power_on_behavior],
+        toZigbee: [tz.power_on_behavior],
         configure: async (device, coordinatorEndpoint) => {
-            await m.setupAttributes(
-                device,
-                coordinatorEndpoint,
-                "genOnOff",
-                [{attribute: "startUpOnOff", min: "MIN", max: "MAX", change: 1}],
-                false,
-            );
+            await m.setupAttributes(device, coordinatorEndpoint, "genOnOff", [{attribute: "startUpOnOff", min: "MIN", max: "MAX", change: 1}], false);
         },
         meta: {},
     },
